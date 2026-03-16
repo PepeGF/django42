@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículum — Juan García</title>
+    <style>
+        /* Estilos generales y separación estilo/contenido (solución: style en head) */
+        body{font-family: Arial, Helvetica, sans-serif; line-height:1.4; padding:24px; color:#222;}
+        header{border-bottom:2px solid #eee; padding-bottom:12px; margin-bottom:18px}
+        h1{color:#1a73e8; margin:0}
+        .contact{font-size:0.95rem; color:#666}
+        /* main{gap:32px;} */
+        /* Tabla con bordes visibles y colapsados */
+        table{border-collapse:collapse; width:100%;}
+        table, th, td{border:1px solid #000; padding:8px; text-align:left}
+        th{background:#f5f5f5}
+        /* Color de la celda inferior derecha: #424242 */
+        .bottom-right{border:2px solid #424242}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Juan García</h1>
+        <p class="contact">Desarrollador web • Ingeniería informática • ejemplo@correo.com</p>
+    </header>
+
+    <main>
+            <h2>Habilidades</h2>
+            <ul>
+                <li>HTML5 y semántica</li>
+                <li>CSS3 — Flexbox y Grid</li>
+                <li>JavaScript (ES6+)</li>
+                <li>Python y Django</li>
+            </ul>
+
+            <h2>Idiomas</h2>
+            <ol>
+                <li>Español — Nativo</li>
+                <li>Inglés — Avanzado</li>
+                <li>Francés — Intermedio</li>
+            </ol>
+
+            <h2>Formación y trayectoria</h2>
+            <p>Resumen breve de la carrera y experiencias relevantes.</p>
+
+            <h3>Experiencia</h3>
+            <table>
+                <tr>
+                    <th>Año</th>
+                    <th>Empresa / Proyecto</th>
+                    <th>Rol</th>
+                </tr>
+                <tr>
+                    <td>2024</td>
+                    <td>Empresa Ejemplo S.A.</td>
+                    <td>Desarrollador Frontend</td>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>Proyecto Personal</td>
+                    <td>Fullstack</td>
+                </tr>
+                <tr>
+                    <td>2022</td>
+                    <td>Prácticas Universitarias</td>
+                    <td class="bottom-right">Becario</td>
+                </tr>
+            </table>
+    </main>
+
+</body>
+</html>
