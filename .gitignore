@@ -1,5 +1,6 @@
 *.pdf
 .vscode/
+piscine-django/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
