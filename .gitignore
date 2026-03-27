@@ -2,6 +2,8 @@
 .vscode/
 piscine-django/
 local_lib/
+wololo/
+*.wiki
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
