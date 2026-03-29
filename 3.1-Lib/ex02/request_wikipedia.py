@@ -1,3 +1,4 @@
+import re
 import sys
 import json
 import dewiki
@@ -19,7 +20,6 @@ def wiki_search(term):
     }
 
     headers = {
-        # Pon algo descriptivo + forma de contacto (URL a repo, página de usuario, etc.)
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0",
         "Accept-Encoding": "gzip",
     }
@@ -36,8 +36,19 @@ def wiki_search(term):
     if data.get("error") is not None:
         raise Exception(data["error"]["info"])
     output = dewiki.from_string(data.get("parse", {}).get("wikitext", {}).get("*", ""))
+    if not output:
+        raise Exception("No content found for the given term.")
+    output = clean_text(output)
     with open(f"{adapt_term(term)}.wiki", "w", encoding="utf-8") as f:
         f.write(output)
+
+def clean_text(content):
+    cleaned = re.sub(r"<ref[^>]*/>", "", content)
+    cleaned = re.sub(r"<ref[^>]*>.*?</ref>", "", cleaned, flags=re.DOTALL)
+    cleaned = re.sub(r"</?ref[^>]*>", "", cleaned)
+    cleaned = re.sub(r"\{\{.*?\}\}", "", cleaned, flags=re.DOTALL)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned.strip()
 
 def main():
     if len(sys.argv) != 2:
