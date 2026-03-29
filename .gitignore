@@ -5,6 +5,12 @@ local_lib/
 wololo/
 *.wiki
 
+# uv files
+.uv/
+.python-version
+pyproject.toml
+uv.lock
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
