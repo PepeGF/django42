@@ -5,6 +5,7 @@ local_lib/
 wololo/
 *.wiki
 .venv*/
+staticfiles/
 
 # uv files
 .uv/
