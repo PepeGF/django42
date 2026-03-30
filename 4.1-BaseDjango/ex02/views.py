@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from .forms import History
 import logging
 from django.conf import settings
+from django.shortcuts import render, redirect
+from .forms import History
 
 logger = logging.getLogger("form_logger")
 

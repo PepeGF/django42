@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What a wonderful table!</title>
+    <style>
+        .th {
+            width: 80px;
+            height: 40px;
+            text-align: center;
+        }
+        .td {
+            width: 80px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:left;">What a wonderful table!</h1>
+    <h3></h3>
+    <table style="border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th class="th">{{ headers.0 }}</th>
+                <th class="th">{{ headers.1 }}</th>
+                <th class="th">{{ headers.2 }}</th>
+                <th class="th">{{ headers.3 }}</th>
+            </tr>
+        </thead>
+    <tbody>
+        {% for row in rows %}
+            <tr>
+                <td class="td" style="background:{{ row.0 }}">{{ forloop.counter }}</td>
+                <td class="td" style="background:{{ row.1 }}"></td>
+                <td class="td" style="background:{{ row.2 }}"></td>
+                <td class="td" style="background:{{ row.3 }}"></td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

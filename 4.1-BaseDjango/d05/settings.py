@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'ex00',
     'ex01',
     'ex02',
+    'ex03',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +135,7 @@ LOGGING = {
     "formatters": {
         "form_formatter": {
             # timestamp + mensaje
-            "format": "%(asctime)s | %(message)s",
+            "format": "%(message)s | %(asctime)s",
             # Formato de fecha legible
             "datefmt": "%H:%M:%S %d/%m/%Y",
         },

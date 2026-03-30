@@ -4,6 +4,7 @@ piscine-django/
 local_lib/
 wololo/
 *.wiki
+.venv*/
 
 # uv files
 .uv/
