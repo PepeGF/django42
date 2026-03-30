@@ -1,16 +1,33 @@
-from django.shortcuts import render
-from .forms import SampleForm
+from django.shortcuts import render, redirect
+from .forms import History
+import logging
+from django.conf import settings
 
-# Create your views here.
+logger = logging.getLogger("form_logger")
 
 def form_view(request):
     """Handle form display and submission."""
     if request.method == 'POST':
-        form = SampleForm(request.POST)
+        form = History(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            return render(request, 'ex02/success.html', {'name': name})
+            text = form.cleaned_data['text']
+            logger.info("%s", text)
+            return redirect('ex02-form') # este el el nombre de la url puesto en urls.py de la app
     else:
-        form = SampleForm()
+        try:
+            with open(settings.FORM_LOG_FILE, 'r') as f:
+                log_content = f.read()
+            complete_history = log_content.splitlines()
+            complete_history.reverse()
+        except FileNotFoundError:
+            complete_history = []
+        form = History()
     
-    return render(request, 'ex02/form.html', {'form': form})
+    return render(
+        request, 
+        'ex02/form.html', 
+        context={
+            'form': form, 
+            'history': complete_history
+            }
+        )

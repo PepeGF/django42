@@ -105,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
@@ -123,3 +123,38 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+FORM_LOG_FILE = BASE_DIR / "logs" / "form_inputs.log"
+FORM_LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "form_formatter": {
+            # timestamp + mensaje
+            "format": "%(asctime)s | %(message)s",
+            # Formato de fecha legible
+            "datefmt": "%H:%M:%S %d/%m/%Y",
+        },
+    },
+
+    "handlers": {
+        "form_file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": str(FORM_LOG_FILE),
+            "formatter": "form_formatter",
+        },
+    },
+
+    "loggers": {
+        "form_logger": {
+            "handlers": ["form_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+

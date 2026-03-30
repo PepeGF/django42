@@ -12,5 +12,8 @@
 {% csrf_token %}
 {{form}}
 <button type="submit">Submit</button>
+{% for line in history %}
+<p>{{ line }}</p>
+{% endfor %}
 </form>
 {% endblock %}

@@ -1,7 +1,6 @@
 from django import forms
 
-class SampleForm(forms.Form):
+class History(forms.Form):
     """A simple form with a single text field."""
-    name = forms.CharField(label='Your Name', max_length=100)
-    # submit button
+    text = forms.CharField(label='Inputs')
     
