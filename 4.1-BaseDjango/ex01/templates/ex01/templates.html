@@ -1,0 +1,39 @@
+{% extends 'ex01/base.html' %}
+{% load static %}
+
+{% block title %}Ex01: Template engine.{% endblock %}
+
+{% block style %}
+<!-- Override base style to use red stylesheet for this page -->
+<link rel="stylesheet" href="{% static 'ex01/style2.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Ex01: Template engine.</h1>
+<p>The Django template engine merges templates with context data to produce HTML.
+It supports template inheritance with <strong>blocks</strong>, control structures
+such as <strong>for</strong> loops and <strong>if</strong> conditions, and variable
+display from the context passed by the view.</p>
+
+<h2>Blocks and inheritance</h2>
+<p>Templates can extend a base template and override named blocks (e.g. <code>title</code>,
+<code>style</code>, <code>content</code>).</p>
+
+<h2>Loop example</h2>
+<ul>
+  {% for item in items %}
+    <li>{{ forloop.counter }} — {{ item }}</li>
+  {% endfor %}
+</ul>
+
+<h2>If example</h2>
+{% if show_extra %}
+  <p>The <code>show_extra</code> flag is true, so we display this extra line.</p>
+{% else %}
+  <p>No extra content.</p>
+{% endif %}
+
+<h2>Context variable</h2>
+<p>Message from view: {{ message }}</p>
+
+{% endblock %}
