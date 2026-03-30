@@ -126,7 +126,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-FORM_LOG_FILE = BASE_DIR / "logs" / "form_inputs.log"
+FORM_LOG_FILE = BASE_DIR / "d05"/ "logs" / "form_inputs.log"
 FORM_LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 LOGGING = {
