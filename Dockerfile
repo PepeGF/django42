@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir Django requests psycopg2-binary gunicorn
+RUN pip install --no-cache-dir Django requests psycopg2-binary gunicorn dotenv
 
 EXPOSE 8000
 
