@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Movies
-import psycopg2
 from django.conf import settings
+import psycopg2
 
 
 def init(request):
