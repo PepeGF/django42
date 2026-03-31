@@ -6,6 +6,7 @@ wololo/
 *.wiki
 .venv*/
 staticfiles/
+django-venv/
 
 # uv files
 .uv/

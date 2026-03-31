@@ -18,3 +18,5 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
   CMD pg_isready -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" || exit 1
 
 # Keep the default entrypoint/CMD from the base image
+
+# docker exec -it postgres_django psql -U djangouser -d djangotraining
