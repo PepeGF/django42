@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.gender.label_tag }} {{ form.gender }}
+        <br><br>
+        {{ form.diameter_gt.label_tag }} {{ form.diameter_gt }}
+        <br><br>
+        {{ form.min_release_date.label_tag }} {{ form.min_release_date }}
+        <br><br>
+        {{ form.max_release_date.label_tag }} {{ form.max_release_date }}
+        <br><br>
+        <button type="submit">Filter</button>
+    </form>
+    <br><br>
+    {% if movies %}
+    {% for movie in movies %}
+        <p>{{ movie.movie_name }} - {{ movie.character_name }} - {{ movie.character_gender }} - {{ movie.character_homeworld }} - {{ movie.planet_diameter }}</p>
+    {% endfor %}
+    {% else %}
+        {{ warning_text }}
+    {% endif %}
+</body>
+</html>

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'ex07',
     'ex08',
     'ex09',
+    'ex10',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,6 @@ WSGI_APPLICATION = 'd06.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    # postgres database using ../.env file for credentials
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': dotenv.get_key(BASE_DIR / ".env", "DB_NAME"),
