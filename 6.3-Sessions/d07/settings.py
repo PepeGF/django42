@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ex'
 ]
 
 MIDDLEWARE = [
@@ -102,9 +103,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
@@ -124,8 +125,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 RANDOM_NAMES = [
     "Pubill",
     "Giménez",
-    "Llorente",
     "Le Normand",
+    "Llorente",
     "Koke",
     "Pablo Barrios",
     "Simeone",
