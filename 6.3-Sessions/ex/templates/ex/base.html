@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Training Django - Exercises</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/">Home</a>
+      |
+      {% if user.is_authenticated %}
+        <a href="{% url 'ex:logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'ex:login' %}">Login</a> |
+        <a href="{% url 'ex:register' %}">Register</a>
+      {% endif %}
+      <span style="margin-left:20px;">Hello {% if user.is_authenticated %}{{ user.username }}{% else %}{{ request.session.anon_name }}{% endif %}!</span>
+    </nav>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

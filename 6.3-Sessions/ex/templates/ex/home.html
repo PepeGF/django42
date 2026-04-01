@@ -1,0 +1,45 @@
+{% extends 'ex/base.html' %}
+
+{% block content %}
+<h1>Welcome to Training Django - Exercises</h1>
+
+<p>
+	{% if user.is_authenticated %}
+		Hello {{ user.username }} ({{ user.reputation }})
+	{% else %}
+		Hello {{ anon_name }}
+	{% endif %}
+</p>
+
+{% if user.is_authenticated %}
+	<h2>Create a Tip</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">Post tip</button>
+	</form>
+{% else %}
+	<p><a href="/admin/login/">Log in</a> to post tips and vote.</p>
+{% endif %}
+
+<h2>Tips</h2>
+<ul>
+	{% for tip in tips %}
+		<li>
+			<p>{{ tip.content|linebreaksbr }}</p>
+			<p>by {{ tip.author.username }} ({{ tip.author.reputation }}) - {{ tip.created_at }}</p>
+			<p>Upvotes: {{ tip.upvotes }} | Downvotes: {{ tip.downvotes }}</p>
+			{% if user.is_authenticated %}
+				<a href="{% url 'ex:vote' tip.id 1 %}">Upvote</a>
+				<a href="{% url 'ex:vote' tip.id -1 %}">Downvote</a>
+				{% if tip.author == user %}
+					<a href="{% url 'ex:delete_tip' tip.id %}">Delete</a>
+				{% endif %}
+			{% endif %}
+		</li>
+	{% empty %}
+		<li>No tips yet.</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
