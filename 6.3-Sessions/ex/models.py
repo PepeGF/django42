@@ -5,7 +5,6 @@ class Tips(models.Model):
     content = models.TextField(null=False, blank=False)
     author = models.CharField(max_length=150, null=False, blank=False)
     date = models.DateTimeField(auto_now_add=True)
-    # Many-to-many relations to track which users upvoted or downvoted a tip
     upvoters = models.ManyToManyField(User, related_name='upvoted_tips', blank=True)
     downvoters = models.ManyToManyField(User, related_name='downvoted_tips', blank=True)
 
@@ -19,3 +18,8 @@ class Tips(models.Model):
     @property
     def downvotes_count(self):
         return self.downvoters.count()
+    
+    class Meta:
+        permissions = (
+            ("can_downvote", "Can downvote tips"),
+        )

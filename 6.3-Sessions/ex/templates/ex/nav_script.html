@@ -6,24 +6,20 @@
         async function refreshNavText() {
             const res = await fetch("{% url 'nav-text' %}", {
                 headers: { "Accept": "application/json" }
-                // En same-origin normalmente no hace falta credentials; el navegador envía cookies en same-origin.
             });
             const data = await res.json();
 
             el.textContent = data.random_name;
 
-            // Si el usuario ya está autenticado, dejamos de refrescar para no hacer peticiones inútiles.
             if (data.authenticated && intervalId) {
                 clearInterval(intervalId);
                 intervalId = null;
             }
         }
 
-        // Primera carga
         refreshNavText();
 
-        // Cada 42 segundos
         intervalId = setInterval(refreshNavText, 42000);
-        //intervalId = setInterval(refreshNavText, 42000);
+        //intervalId = setInterval(refreshNavText, 1000);
     })();
 </script>

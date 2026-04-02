@@ -38,7 +38,7 @@
                 <span>{{ tip.upvotes_count }}</span>
 
                 <!-- Downvote -->
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated and perms.ex.can_downvote %}
                     <form method="post" action="{% url 'tip-downvote' tip.id %}" style="display:inline">
                         {% csrf_token %}
                         {% if user in tip.downvoters.all %}
@@ -52,13 +52,19 @@
                 {% endif %}
                 <span>{{ tip.downvotes_count }}</span>
 
-                <!-- Delete (only visible to author) -->
-                {% if user.is_authenticated and user.username == tip.author %}
-                    <form method="post" action="{% url 'tip-delete' tip.id %}" style="display:inline; margin-left:10px">
-                        {% csrf_token %}
-                        <button type="submit">Delete</button>
-                    </form>
-                {% endif %}
+                <!-- Delete: visible to all, active only for author / users with permission / staff -->
+                <form method="post" action="{% url 'tip-delete' tip.id %}" style="display:inline; margin-left:10px">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                        {% if user.username == tip.author or perms.ex.delete_tips or user.is_staff %}
+                            <button type="submit">Delete</button>
+                        {% else %}
+                            <button type="submit" disabled class="disabled">Delete</button>
+                        {% endif %}
+                    {% else %}
+                        <button type="submit" disabled class="disabled">Delete</button>
+                    {% endif %}
+                </form>
             </div>
         </div>
         <hr>

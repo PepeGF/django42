@@ -79,6 +79,8 @@ def tip_upvote(request: HttpRequest, tip_id: int) -> HttpResponse:
 def tip_downvote(request: HttpRequest, tip_id: int) -> HttpResponse:
     tip = get_object_or_404(Tips, id=tip_id)
     user = request.user
+    # if not user.has_perm('ex.can_downvote'):
+    #     return redirect('index')
     if tip.downvoters.filter(id=user.id).exists():
         tip.downvoters.remove(user)
     else:
