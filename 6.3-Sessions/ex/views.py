@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from .forms import RegistrationForm, LoginForm, TipForm
 from .models import Tips
 import random
@@ -60,6 +61,39 @@ def logout(request: HttpRequest) -> HttpResponse:
     auth_logout(request)
     return redirect('index')
 
+
+@login_required
+def tip_upvote(request: HttpRequest, tip_id: int) -> HttpResponse:
+    tip = get_object_or_404(Tips, id=tip_id)
+    user = request.user
+    if tip.upvoters.filter(id=user.id).exists():
+        tip.upvoters.remove(user)
+    else:
+        if tip.downvoters.filter(id=user.id).exists():
+            tip.downvoters.remove(user)
+        tip.upvoters.add(user)
+    return redirect('index')
+
+
+@login_required
+def tip_downvote(request: HttpRequest, tip_id: int) -> HttpResponse:
+    tip = get_object_or_404(Tips, id=tip_id)
+    user = request.user
+    if tip.downvoters.filter(id=user.id).exists():
+        tip.downvoters.remove(user)
+    else:
+        if tip.upvoters.filter(id=user.id).exists():
+            tip.upvoters.remove(user)
+        tip.downvoters.add(user)
+    return redirect('index')
+
+
+@login_required
+def tip_delete(request: HttpRequest, tip_id: int) -> HttpResponse:
+    tip = get_object_or_404(Tips, id=tip_id)
+    tip.delete()
+    return redirect('index')
+
 def nav_text(request: HttpRequest) -> JsonResponse:
     if request.user.is_authenticated:
         text = request.user.get_username()
@@ -81,3 +115,21 @@ def add_tip(request: HttpRequest) -> HttpResponse:
     else:
         form = TipForm()
     return redirect('index')
+
+
+
+
+def debug_tips(request: HttpRequest) -> HttpResponse:
+    tips = Tips.objects.all()
+    # print colums names of Tips database table
+    for tip in tips:
+        # print who is upvoting and downvoting each tip
+        upvoters = tip.upvoters.all()
+        downvoters = tip.downvoters.all()
+        print(f"ID: {tip.id}, Content: {tip.content}, Author: {tip.author}, Upvotes: {tip.upvotes_count}, Downvotes: {tip.downvotes_count}")
+        if upvoters:
+            print(f"  Upvoters: {[user.username for user in upvoters]}")
+        if downvoters:
+            print(f"  Downvoters: {[user.username for user in downvoters]}")
+    debug_info = "\n".join([f"{tip.id}: {tip.content} (Upvotes: {tip.upvotes_count}, Downvotes: {tip.downvotes_count})" for tip in tips])
+    return HttpResponse(f"<pre>{debug_info}</pre>")

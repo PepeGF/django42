@@ -2,6 +2,11 @@
 
 {% block content %}
     <h1>Tips!</h1>
+    <style>
+        .vote-button { margin-right:8px }
+        .voted { background-color: #d4edda; border: 1px solid #c3e6cb }
+        .disabled { opacity: 0.6 }
+    </style>
 
     {% if user.is_authenticated %}
     <form method="post" action="{% url 'add-tip' %}" novalidate>
@@ -16,6 +21,45 @@
         <div>
             <p>{{ tip.content }}</p>
             <small>By {{ tip.author }} on {{ tip.date }}</small>
+            <div style="margin-top:8px">
+                <!-- Upvote -->
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'tip-upvote' tip.id %}" style="display:inline">
+                        {% csrf_token %}
+                        {% if user in tip.upvoters.all %}
+                            <button type="submit" class="vote-button voted">⬆ Upvoted</button>
+                        {% else %}
+                            <button type="submit" class="vote-button">⬆ Upvote</button>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <button disabled class="vote-button disabled">⬆ Upvote</button>
+                {% endif %}
+                <span>{{ tip.upvotes_count }}</span>
+
+                <!-- Downvote -->
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'tip-downvote' tip.id %}" style="display:inline">
+                        {% csrf_token %}
+                        {% if user in tip.downvoters.all %}
+                            <button type="submit" class="vote-button voted">⬇ Downvoted</button>
+                        {% else %}
+                            <button type="submit" class="vote-button">⬇ Downvote</button>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <button disabled class="vote-button disabled">⬇ Downvote</button>
+                {% endif %}
+                <span>{{ tip.downvotes_count }}</span>
+
+                <!-- Delete (only visible to author) -->
+                {% if user.is_authenticated and user.username == tip.author %}
+                    <form method="post" action="{% url 'tip-delete' tip.id %}" style="display:inline; margin-left:10px">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
         </div>
         <hr>
     {% empty %}
