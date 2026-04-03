@@ -16,4 +16,16 @@
   <p>
     <a href="{% url 'ex:publications' %}">Back to Publications</a>
   </p>
+
+  
+  {% if user.is_authenticated %}
+    <form method="post" action="{% url 'ex:add-favourite' article.pk %}">
+      {% csrf_token %}
+      {{ form }} {# opcional: si NO pasas form desde Detail, quítalo #}
+      <button type="submit">Add to favourite</button>
+    </form>
+  {% else %}
+    <p>You must login to add favourites.</p>
+  {% endif %}
+
 {% endblock %}

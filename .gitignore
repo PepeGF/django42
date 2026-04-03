@@ -7,7 +7,6 @@ wololo/
 .venv*/
 staticfiles/
 django-venv/
-migrations/
 
 # uv files
 .uv/
