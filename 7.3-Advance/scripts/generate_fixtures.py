@@ -17,6 +17,14 @@ import json
 import os
 from datetime import datetime, timedelta, timezone
 
+import sys
+from pathlib import Path
+
+
+# Añadir la raíz del proyecto (donde está manage.py) al PYTHONPATH
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
+
 
 def iso(dt: datetime) -> str:
     return dt.isoformat().replace('+00:00', 'Z')
@@ -29,8 +37,8 @@ def main():
     ap.add_argument('--password', default='1234', help='Password por defecto para los usuarios del ejemplo')
     args = ap.parse_args()
 
-    if args.settings:
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', args.settings)
+    # if args.settings:
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', args.settings)
 
     # Importar Django y preparar entorno
     import django
