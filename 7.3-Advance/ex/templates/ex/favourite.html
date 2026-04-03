@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Favourite Articles{% endblock %}
+
+{% block content %}
+<h1>Favourite Articles</h1>
+{% if favourite_articles %}
+    <table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Created</th>
+            <th>Synopsis</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for favourite in favourite_articles %}
+        <tr>
+            <td>{{ favourite.article.title }}</td>
+            <td>{{ favourite.article.author }}</td>
+            <td>{{ favourite.article.created }}</td>
+            <td>{{ favourite.article.synopsis }}</td>
+        </tr>
+    </tbody>
+        {% endfor %}
+    
+{% else %}
+    <p>You have no favourite articles.</p>
+{% endif %}
+{% endblock %}

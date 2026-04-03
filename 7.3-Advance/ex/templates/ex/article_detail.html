@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ article.title }}</h1>
+
+  <p><strong>Author:</strong> {{ article.author.username }}</p>
+  <p><strong>Created:</strong> {{ article.created }}</p>
+  <p><strong>Synopsis:</strong> {{ article.synopsis }}</p>
+
+  <hr>
+  <h3>Content</h3>
+  <div>
+    {{ article.content|linebreaks }}
+  </div>
+
+  <p>
+    <a href="{% url 'ex:publications' %}">Back to Publications</a>
+  </p>
+{% endblock %}

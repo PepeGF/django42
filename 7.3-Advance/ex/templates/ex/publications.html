@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Publications{% endblock %}
+
+{% block content %}
+<!-- Articles shown as a table -->
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Synopsis</th>
+            <th>Created</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            <td>{{ article.title }}</td>
+            <td>{{ article.synopsis }}</td>
+            <td>{{ article.created }}</td>
+            <td>
+                <a href="{% url 'ex:article-detail' article.pk %}">Read</a>
+                {% comment %}
+                {# también vale: {% url 'ex:article-detail' pk=article.pk %} #}
+                {% endcomment %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

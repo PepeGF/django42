@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+        {% block nav %}
+        <nav>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'ex:logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                    </form>
+                {% endif %}
+        </nav>
+        {% endblock %}
+{% block content %}
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
+{% endblock %}

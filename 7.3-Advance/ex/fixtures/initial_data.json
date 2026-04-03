@@ -1,0 +1,127 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$REEMPLAZA$REEMPLAZA",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "djangouser",
+      "first_name": "",
+      "last_name": "",
+      "email": "djangouser@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-04-03T09:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$REEMPLAZA$REEMPLAZA",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "batman",
+      "first_name": "",
+      "last_name": "",
+      "email": "batman@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-04-03T09:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$REEMPLAZA$REEMPLAZA",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "bob",
+      "first_name": "",
+      "last_name": "",
+      "email": "bob@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2026-04-03T09:00:00Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "ex.article",
+    "pk": 1,
+    "fields": {
+      "title": "my story",
+      "author": 1,
+      "created": "2026-03-31T08:00:00Z",
+      "synopsis": "The story of djangouser (this synopsis is deliberately longer than twenty chars).",
+      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nThis content can be anything."
+    }
+  },
+  {
+    "model": "ex.article",
+    "pk": 2,
+    "fields": {
+      "title": "POUET",
+      "author": 2,
+      "created": "2026-03-26T05:00:00Z",
+      "synopsis": "POUET POUET",
+      "content": "Lorem ipsum."
+    }
+  },
+  {
+    "model": "ex.article",
+    "pk": 3,
+    "fields": {
+      "title": "I'm BATMAN",
+      "author": 2,
+      "created": "2026-03-25T07:00:00Z",
+      "synopsis": "I'm REALLY BATMAN",
+      "content": "Lorem ipsum."
+    }
+  },
+  {
+    "model": "ex.article",
+    "pk": 4,
+    "fields": {
+      "title": "Bob l'éponge: La revanche de Plankton",
+      "author": 3,
+      "created": "2026-03-24T03:00:00Z",
+      "synopsis": "Plankton a volé un pâté de crabe, Bob pourra-t-il sauver la situation. Attention, scènes de violence.",
+      "content": "Lorem ipsum."
+    }
+  },
+  {
+    "model": "ex.article",
+    "pk": 5,
+    "fields": {
+      "title": "Insanity",
+      "author": 2,
+      "created": "2026-03-22T08:00:00Z",
+      "synopsis": "After leaving the Joker for the last time, Harley tries to rebuild her life away from Gotham and the Joker...",
+      "content": "Lorem ipsum."
+    }
+  },
+  {
+    "model": "ex.userfavouritearticle",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "article": 2
+    }
+  },
+  {
+    "model": "ex.userfavouritearticle",
+    "pk": 2,
+    "fields": {
+      "user": 1,
+      "article": 3
+    }
+  }
+]

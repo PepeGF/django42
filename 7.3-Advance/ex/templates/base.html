@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+</head>
+<body>
+    {% block header %}
+    <header>
+        <h1>Welcome to My Site</h1>
+        {% block nav %}
+        <nav>
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'ex:logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'ex:login' %}">Login</a>
+                {% endif %}
+        </nav>
+        {% endblock %}
+    </header>
+    {% endblock %}
+    <main>
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+    {% block footer %}
+    <footer>
+        <p>&copy; 2026 My Site Visita mi página de MySpace</p>
+    </footer>
+    {% endblock %}
+</body>
+</html>
