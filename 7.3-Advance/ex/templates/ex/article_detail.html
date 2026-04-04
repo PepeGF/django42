@@ -6,6 +6,7 @@
   <p><strong>Author:</strong> {{ article.author.username }}</p>
   <p><strong>Created:</strong> {{ article.created }}</p>
   <p><strong>Synopsis:</strong> {{ article.synopsis }}</p>
+  <p><strong>Time since created:</strong> {{ article.created|timesince }}</p>
 
   <hr>
   <h3>Content</h3>

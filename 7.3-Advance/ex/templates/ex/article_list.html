@@ -11,6 +11,7 @@
             <th>Author</th>
             <th>Created</th>
             <th>Synopsis</th>
+            <th>Time since created</th>
         </tr>
     </thead>
     <tbody>
@@ -19,7 +20,8 @@
             <td><a href="{% url 'ex:article-detail' article.pk %}">{{ article.title }}</a></td>
             <td>{{ article.author }}</td>
             <td>{{ article.created }}</td>
-            <td>{{ article.synopsis }}</td>
+            <td>{{ article.synopsis|truncatechars:21 }}</td>
+            <td>{{ article.created|timesince}}</td>
         </tr>
         {% endfor %}
     </tbody>

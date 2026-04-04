@@ -16,10 +16,9 @@ class Articles(ListView):
     template_name = "ex/articles_list.html"
     context_object_name = "articles"
 
+    def get_queryset(self):
+        return self.model.objects.order_by('-created')
 
-    # descomentar al llegar a ex03
-    # class Meta:
-    #     ordering = ['-created']
 
 class Home(RedirectView):
     url = reverse_lazy('ex:articles')
@@ -39,6 +38,12 @@ class Publications(LoginRequiredMixin, ListView):
     
     def handle_no_permission(self):
         return redirect('ex:login')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for article in context['articles']:
+            article.synopsis = article.synopsis[:20] + "..." if len(article.synopsis) > 20 else article.synopsis
+        return context
     
 class Detail(LoginRequiredMixin, DetailView):
     # only available for authors of the article????

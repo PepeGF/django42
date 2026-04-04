@@ -10,6 +10,7 @@
             <th>Title</th>
             <th>Synopsis</th>
             <th>Created</th>
+            <th>Time since created</th>
             <th>Link</th>
         </tr>
     </thead>
@@ -17,8 +18,9 @@
         {% for article in articles %}
         <tr>
             <td>{{ article.title }}</td>
-            <td>{{ article.synopsis }}</td>
+            <td>{{ article.synopsis|truncatechars:21 }}</td>
             <td>{{ article.created }}</td>
+            <td>{{ article.created|timesince }}</td>
             <td>
                 <a href="{% url 'ex:article-detail' article.pk %}">Read</a>
                 {% comment %}

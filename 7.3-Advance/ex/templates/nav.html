@@ -1,0 +1,33 @@
+<nav>
+    <style>
+    .link-like {
+        background: none;
+        border: none;
+        padding: 0;
+        color: #00f;
+        text-decoration: underline;
+        cursor: pointer;
+        font: inherit;
+        }
+    </style>
+    <!-- Link a Home (/)-->
+    <a href="{% url 'ex:home' %}">Home</a>
+    <!-- Link to last article -->
+    <a href="{% url 'ex:articles' %}">Article List</a>
+    {% if user.is_authenticated %}
+    <!-- Link to Favourites -->
+    <a href="{% url 'ex:favourites' %}">Favourites</a>
+    <!-- Link to Publications -->
+    <a href="{% url 'ex:publications' %}">Publications</a>
+    <a href="{% url 'ex:publish' %}">Publish</a>
+    Logged as {{ user.username }}
+    <form method="post" action="{% url 'ex:logout' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="link-like">Logout</button>
+    </form>
+    {% else %}
+        <a href="{% url 'ex:login' %}">Login</a>
+        <!-- Link to Register -->
+        <a href="{% url 'ex:register' %}">Register</a>
+    {% endif %}
+</nav>
