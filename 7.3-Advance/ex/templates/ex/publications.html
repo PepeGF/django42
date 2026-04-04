@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Publications{% endblock %}
+{% block title %}{% trans "Publications" %}{% endblock %}
 
 {% block content %}
 <!-- Articles shown as a table -->
 <table>
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Synopsis</th>
-            <th>Created</th>
-            <th>Time since created</th>
-            <th>Link</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Synopsis" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "Time since created" %}</th>
+            <th>{% trans "Link" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -22,10 +23,7 @@
             <td>{{ article.created }}</td>
             <td>{{ article.created|timesince }}</td>
             <td>
-                <a href="{% url 'ex:article-detail' article.pk %}">Read</a>
-                {% comment %}
-                {# también vale: {% url 'ex:article-detail' pk=article.pk %} #}
-                {% endcomment %}
+                <a href="{% url 'ex:article-detail' article.pk %}">{% trans "Read" %}</a>
             </td>
         </tr>
         {% endfor %}

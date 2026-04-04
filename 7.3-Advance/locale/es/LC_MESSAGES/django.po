@@ -1,0 +1,127 @@
+# Spanish translations for the project.
+# Created by assistant as a draft. Run `django-admin makemessages` and `compilemessages` in your environment.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-04 00:00+0000\n"
+"PO-Revision-Date: 2026-04-04 00:00+0000\n"
+"Last-Translator: You <you@example.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Base
+msgid "My Site"
+msgstr "Mi Sitio"
+
+msgid "Welcome to My Site"
+msgstr "Bienvenido a Mi Sitio"
+
+msgid "Visit my MySpace page"
+msgstr "Visita mi página de MySpace"
+
+# Nav / common
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Article List"
+msgstr "Lista de Artículos"
+
+msgid "Favourites"
+msgstr "Favoritos"
+
+msgid "Publications"
+msgstr "Publicaciones"
+
+msgid "Publish"
+msgstr "Publicar"
+
+msgid "Logged as"
+msgstr "Conectado como"
+
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+msgid "Login"
+msgstr "Iniciar sesión"
+
+msgid "Register"
+msgstr "Registrarse"
+
+# Article list
+msgid "Articles List"
+msgstr "Lista de Artículos"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Synopsis"
+msgstr "Sinopsis"
+
+msgid "Time since created"
+msgstr "Tiempo desde la creación"
+
+# Publications / table
+msgid "Link"
+msgstr "Enlace"
+
+msgid "Read"
+msgstr "Leer"
+
+# Article detail
+msgid "Author:"
+msgstr "Autor:"
+
+msgid "Created:"
+msgstr "Creado:"
+
+msgid "Synopsis:"
+msgstr "Sinopsis:"
+
+msgid "Time since created:"
+msgstr "Tiempo desde la creación:"
+
+msgid "Content"
+msgstr "Contenido"
+
+msgid "Back to Publications"
+msgstr "Volver a Publicaciones"
+
+msgid "Add to favourite"
+msgstr "Añadir a favoritos"
+
+msgid "You must login to add favourites."
+msgstr "Debes iniciar sesión para añadir favoritos."
+
+# Logout messages
+msgid "You have been logged out."
+msgstr "Has cerrado sesión."
+
+msgid "Return to Home"
+msgstr "Volver al Inicio"
+
+# Favourites
+msgid "Favourite Articles"
+msgstr "Artículos Favoritos"
+
+msgid "You have no favourite articles."
+msgstr "No tienes artículos favoritos."
+
+# Register / Publish
+msgid "Register"
+msgstr "Registrarse"
+
+msgid "Publish Article"
+msgstr "Publicar artículo"
+
+msgid "Publish"
+msgstr "Publicar"

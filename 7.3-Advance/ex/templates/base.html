@@ -1,14 +1,15 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
+    <title>{% block title %}{% trans "My Site" %}{% endblock %}</title>
 </head>
 <body>
     {% block header %}
     <header>
-        <h1>Welcome to My Site</h1>
+        <h1>{% trans "Welcome to My Site" %}</h1>
         {% include 'nav.html' %}
     </header>
     {% endblock %}
@@ -19,7 +20,7 @@
     </main>
     {% block footer %}
     <footer>
-        <p>&copy; 2026 My Site Visita mi página de MySpace</p>
+        <p>&copy; 2026 {% trans "My Site" %} — {% trans "Visit my MySpace page" %}</p>
     </footer>
     {% endblock %}
 </body>

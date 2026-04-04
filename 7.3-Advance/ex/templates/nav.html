@@ -1,3 +1,4 @@
+{% load i18n %}
 <nav>
     <style>
     .link-like {
@@ -11,23 +12,34 @@
         }
     </style>
     <!-- Link a Home (/)-->
-    <a href="{% url 'ex:home' %}">Home</a>
+    <a href="{% url 'ex:home' %}">{% trans "Home" %}</a>
     <!-- Link to last article -->
-    <a href="{% url 'ex:articles' %}">Article List</a>
+    <a href="{% url 'ex:articles' %}">{% trans "Article List" %}</a>
     {% if user.is_authenticated %}
     <!-- Link to Favourites -->
-    <a href="{% url 'ex:favourites' %}">Favourites</a>
+    <a href="{% url 'ex:favourites' %}">{% trans "Favourites" %}</a>
     <!-- Link to Publications -->
-    <a href="{% url 'ex:publications' %}">Publications</a>
-    <a href="{% url 'ex:publish' %}">Publish</a>
-    Logged as {{ user.username }}
+    <a href="{% url 'ex:publications' %}">{% trans "Publications" %}</a>
+    <a href="{% url 'ex:publish' %}">{% trans "Publish" %}</a>
+    {% trans "Logged as" %} {{ user.username }}
     <form method="post" action="{% url 'ex:logout' %}" style="display:inline;">
     {% csrf_token %}
-    <button type="submit" class="link-like">Logout</button>
+    <button type="submit" class="link-like">{% trans "Logout" %}</button>
     </form>
     {% else %}
-        <a href="{% url 'ex:login' %}">Login</a>
+        <a href="{% url 'ex:login' %}">{% trans "Login" %}</a>
         <!-- Link to Register -->
-        <a href="{% url 'ex:register' %}">Register</a>
+        <a href="{% url 'ex:register' %}">{% trans "Register" %}</a>
     {% endif %}
+
+    <!-- Language switcher -->
+    <form action="{% url 'set_language' %}" method="post" style="display:inline; margin-left:1rem;">
+      {% csrf_token %}
+      {% get_current_language as LANGUAGE_CODE %}
+      <select name="language" onchange="this.form.submit()">
+        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+        <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
+      </select>
+    </form>
+
 </nav>

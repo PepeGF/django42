@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Articles List{% endblock %}
+{% block title %}{% trans "Articles List" %}{% endblock %}
 
 {% block content %}
 <!-- Articles shown as a table -->
 <table>
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Created</th>
-            <th>Synopsis</th>
-            <th>Time since created</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Author" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "Synopsis" %}</th>
+            <th>{% trans "Time since created" %}</th>
         </tr>
     </thead>
     <tbody>

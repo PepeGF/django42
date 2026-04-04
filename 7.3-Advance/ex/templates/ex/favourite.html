@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Favourite Articles{% endblock %}
+{% block title %}{% trans "Favourite Articles" %}{% endblock %}
 
 {% block content %}
-<h1>Favourite Articles</h1>
+<h1>{% trans "Favourite Articles" %}</h1>
 {% if favourite_articles %}
         <ul>
             {% for favourite in favourite_articles %}
@@ -11,6 +12,6 @@
             {% endfor %}
         </ul>
 {% else %}
-    <p>You have no favourite articles.</p>
+    <p>{% trans "You have no favourite articles." %}</p>
 {% endif %}
 {% endblock %}
