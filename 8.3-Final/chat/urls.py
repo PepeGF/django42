@@ -1,8 +1,9 @@
 from django.urls import path
-from django.http import HttpResponse
+from . import views
 
-app_name = 'chat'
+app_name = "chat"
 
 urlpatterns = [
-    path('', lambda request: HttpResponse("Chat placeholder"), name='rooms'),
+    path("", views.RoomListView.as_view(), name="rooms"),
+    path("<str:room_name>/", views.RoomView.as_view(), name="room"),
 ]

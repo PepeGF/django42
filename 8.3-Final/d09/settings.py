@@ -25,12 +25,13 @@ SECRET_KEY = 'django-insecure-!=mj@r=m2*@s6$soi&3-y-k=y@xc72vchbk-zg5+8l6rc-v!cy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

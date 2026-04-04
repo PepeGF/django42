@@ -1,0 +1,30 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Room {{ room.name }}</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>Room: {{ room.name }}</h1>
+    <p><a href="{% url 'chat:rooms' %}">Back to rooms</a></p>
+
+    <div id="messages-container" style="border: 1px solid #ccc; padding: 10px; min-height: 220px;">
+    </div>
+
+    <div style="margin-top: 10px;">
+        <input id="message-input" type="text" placeholder="Write a message">
+        <button id="send-btn" type="button">Send</button>
+    </div>
+
+    <script>
+        window.CHAT_CONFIG = {
+            roomName: "{{ room.name }}",
+            wsScheme: window.location.protocol === "https:" ? "wss" : "ws"
+        };
+    </script>
+    <script src="{% static 'chat/js/chat.js' %}"></script>
+</body>
+</html>
