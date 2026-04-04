@@ -1,0 +1,5 @@
+Django==5.2.12
+psycopg2-binary==2.9.10
+python-dotenv==1.0.0
+django-bootstrap5==22.1
+channels==4.3.2
