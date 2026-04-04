@@ -81,6 +81,11 @@ class Register(CreateView):
         messages.success(self.request, "Account created successfully. You can now log in.")
         return response
     
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('ex:home')
+        return super().dispatch(request, *args, **kwargs)
+    
 
 class Publish(LoginRequiredMixin, CreateView):
     model = Article
@@ -106,11 +111,10 @@ class AddFavourite(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.article = Article.objects.get(pk=self.kwargs["pk"])
-        try:
-            return super().form_valid(form)
-        except IntegrityError:
-            return redirect("ex:article-detail", pk=self.kwargs["pk"])
+        article = Article.objects.get(pk=self.kwargs["pk"])
+        obj, created = UserFavouriteArticle.objects.get_or_create(user=self.request.user, article=article)
+        self.object = obj
+        return redirect("ex:article-detail", pk=self.kwargs["pk"])
         
     def get_success_url(self):
         return reverse_lazy("ex:article-detail", kwargs={"pk": self.kwargs["pk"]})
