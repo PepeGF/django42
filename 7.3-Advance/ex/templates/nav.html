@@ -12,14 +12,14 @@
         <a href="{% url 'ex:articles' %}">Articles</a>
       </li>
 
-      {% if user.is_authenticated %}
       <li {% if request.resolver_match.url_name == 'favourites' %}class="active"{% endif %}>
         <a href="{% url 'ex:favourites' %}">{% trans "Favourites" %}</a>
       </li>
       <li {% if request.resolver_match.url_name == 'publications' %}class="active"{% endif %}>
         <a href="{% url 'ex:publications' %}">{% trans "Publications" %}</a>
       </li>
-      {% else %}
+
+      {% if not user.is_authenticated %}
       <li {% if request.resolver_match.url_name == 'register' %}class="active"{% endif %}>
         <a href="{% url 'ex:register' %}">{% trans "Register" %}</a>
       </li>

@@ -69,6 +69,9 @@ class Favourite(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return super().get_queryset().filter(user=self.request.user)
+
+    def handle_no_permission(self):
+        return redirect('ex:login')
     
 
 class Register(CreateView):

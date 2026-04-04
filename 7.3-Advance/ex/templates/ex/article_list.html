@@ -19,7 +19,7 @@
         {% for article in articles %}
         <tr>
             <td>{{ article.title }}</td>
-            <td>{{ article.synopsis|truncatechars:140 }}</td>
+            <td>{{ article.synopsis|truncatechars:20 }}</td>
             <td>{{ article.author.username|default:article.author }}</td>
             <td>{{ article.created }}</td>
             <td>{{ article.created|timesince }} {% trans "ago" %}</td>
