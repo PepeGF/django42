@@ -5,6 +5,8 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    room_users = {}
+
     async def connect(self):
         # posible mejora: comprobar que la sala existe antes de aceptar la conexión
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
@@ -30,6 +32,18 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 )
             )
 
+        if self.room_name not in self.room_users:
+            self.room_users[self.room_name] = set()
+        self.room_users[self.room_name].add(self.user.username)
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                "type": "user_list",
+                "users": sorted(self.room_users[self.room_name]),
+            },
+        )
+
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -40,6 +54,30 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def disconnect(self, close_code):
+        if hasattr(self, "room_name") and self.room_name in self.room_users:
+            self.room_users[self.room_name].discard(self.user.username)
+
+            if not self.room_users[self.room_name]:
+                del self.room_users[self.room_name]
+
+        if hasattr(self, "room_group_name") and hasattr(self, "user") and self.user.is_authenticated:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "chat_message",
+                    "message": f"{self.user.username} has left the chat",
+                    "username": "system",
+                },
+            )
+
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "user_list",
+                    "users": sorted(self.room_users.get(self.room_name, [])),
+                },
+            )
+
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
     async def receive(self, text_data):
@@ -65,6 +103,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 {
                     "message": event["message"],
                     "username": event["username"],
+                }
+            )
+        )
+
+    async def user_list(self, event):
+        await self.send(
+            text_data=json.dumps(
+                {
+                    "type": "user_list",
+                    "users": event["users"],
                 }
             )
         )

@@ -32,9 +32,34 @@ $(function () {
         scrollToBottom();
     }
 
+    function renderUserList(users) {
+        const $userList = $("#user-list");
+        $userList.empty();
+
+        users.forEach(function (username) {
+            const $item = $("<li></li>")
+                .addClass("list-group-item d-flex justify-content-between align-items-center")
+                .text(username);
+
+            if (username === currentUsername) {
+                $item.append(
+                    $("<span></span>")
+                        .addClass("badge text-bg-primary rounded-pill")
+                        .text("you")
+                );
+            }
+
+            $userList.append($item);
+        });
+    }
+
     chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        appendMessage(data.username, data.message);
+        if (data.type === "user_list") {
+            renderUserList(data.users || []);
+        } else {
+            appendMessage(data.username, data.message);
+        }
     };
 
     chatSocket.onclose = function () {
