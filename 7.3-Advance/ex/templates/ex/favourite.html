@@ -4,14 +4,32 @@
 {% block title %}{% trans "Favourite Articles" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Favourite Articles" %}</h1>
 {% if favourite_articles %}
-        <ul>
-            {% for favourite in favourite_articles %}
-                <li><a href="{% url 'ex:article-detail' favourite.article.id %}">{{ favourite.article.title }}</a></li>
-            {% endfor %}
-        </ul>
+<table class="table article-table">
+    <thead>
+        <tr>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Writer" %}</th>
+            <th>{% trans "Created" %}</th>
+            <th>{% trans "When" %}</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for favourite in favourite_articles %}
+        <tr>
+            <td>{{ favourite.article.title }}</td>
+            <td>{{ favourite.article.author.username|default:favourite.article.author }}</td>
+            <td>{{ favourite.article.created }}</td>
+            <td>{{ favourite.article.created|timesince }} {% trans "ago" %}</td>
+            <td class="text-right">
+                <a class="btn btn-info" href="{% url 'ex:article-detail' favourite.article.id %}">{% trans "Read" %}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% else %}
-    <p>{% trans "You have no favourite articles." %}</p>
+    <div class="alert alert-warning" role="alert">{% trans "You have no favourite articles." %}</div>
 {% endif %}
 {% endblock %}

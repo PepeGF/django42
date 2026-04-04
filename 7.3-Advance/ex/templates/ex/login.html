@@ -4,10 +4,18 @@
 {% block title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
-<h2>{% trans "Login" %}</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">{% trans "Login" %}</button>
-</form>
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading"><strong>{% trans "Login" %}</strong></div>
+            <div class="panel-body">
+                <form method="post" class="form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

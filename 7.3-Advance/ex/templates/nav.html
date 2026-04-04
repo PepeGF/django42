@@ -1,45 +1,51 @@
 {% load i18n %}
-<nav>
-    <style>
-    .link-like {
-        background: none;
-        border: none;
-        padding: 0;
-        color: #00f;
-        text-decoration: underline;
-        cursor: pointer;
-        font: inherit;
-        }
-    </style>
-    <!-- Link a Home (/)-->
-    <a href="{% url 'ex:home' %}">{% trans "Home" %}</a>
-    <!-- Link to last article -->
-    <a href="{% url 'ex:articles' %}">{% trans "Article List" %}</a>
+<nav class="navbar navbar-inverse" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="{% url 'ex:home' %}">
+        <span class="glyphicon glyphicon-book"></span>
+      </a>
+    </div>
+
+    <ul class="nav navbar-nav">
+      <li {% if request.resolver_match.url_name == 'articles' %}class="active"{% endif %}>
+        <a href="{% url 'ex:articles' %}">Articles</a>
+      </li>
+
+      {% if user.is_authenticated %}
+      <li {% if request.resolver_match.url_name == 'favourites' %}class="active"{% endif %}>
+        <a href="{% url 'ex:favourites' %}">{% trans "Favourites" %}</a>
+      </li>
+      <li {% if request.resolver_match.url_name == 'publications' %}class="active"{% endif %}>
+        <a href="{% url 'ex:publications' %}">{% trans "Publications" %}</a>
+      </li>
+      {% else %}
+      <li {% if request.resolver_match.url_name == 'register' %}class="active"{% endif %}>
+        <a href="{% url 'ex:register' %}">{% trans "Register" %}</a>
+      </li>
+      {% endif %}
+    </ul>
+
     {% if user.is_authenticated %}
-    <!-- Link to Favourites -->
-    <a href="{% url 'ex:favourites' %}">{% trans "Favourites" %}</a>
-    <!-- Link to Publications -->
-    <a href="{% url 'ex:publications' %}">{% trans "Publications" %}</a>
-    <a href="{% url 'ex:publish' %}">{% trans "Publish" %}</a>
-    {% trans "Logged as" %} {{ user.username }}
-    <form method="post" action="{% url 'ex:logout' %}" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="link-like">{% trans "Logout" %}</button>
+    <p class="navbar-text navbar-right">
+      {% trans "Logged as" %} {{ user.username }}
+    </p>
+    <form method="post" action="{% url 'ex:logout' %}" class="navbar-form navbar-right">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-link navbar-btn">{% trans "Logout" %}</button>
     </form>
     {% else %}
-        <a href="{% url 'ex:login' %}">{% trans "Login" %}</a>
-        <!-- Link to Register -->
-        <a href="{% url 'ex:register' %}">{% trans "Register" %}</a>
-    {% endif %}
-
-    <!-- Language switcher -->
-    <form action="{% url 'set_language' %}" method="post" style="display:inline; margin-left:1rem;">
+    <form method="post" action="{% url 'ex:login' %}" class="navbar-form navbar-right" role="form">
       {% csrf_token %}
-      {% get_current_language as LANGUAGE_CODE %}
-      <select name="language" onchange="this.form.submit()">
-        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-        <option value="es" {% if LANGUAGE_CODE == 'es' %}selected{% endif %}>Español</option>
-      </select>
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <div class="form-group">
+        <input type="text" name="username" class="form-control" placeholder="username" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" class="form-control" placeholder="password" required>
+      </div>
+      <button type="submit" class="btn btn-default">{% trans "Login" %}</button>
     </form>
-
+    {% endif %}
+  </div>
 </nav>

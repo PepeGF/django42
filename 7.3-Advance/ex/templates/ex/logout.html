@@ -4,6 +4,6 @@
 {% block title %}{% trans "Logout" %}{% endblock %}
 
 {% block content %}
-    <p>{% trans "You have been logged out." %}</p>
-    <a href="{% url 'ex:home' %}">{% trans "Return to Home" %}</a>
+<div class="alert alert-info" role="alert">{% trans "You have been logged out." %}</div>
+<a class="btn btn-default" href="{% url 'ex:home' %}">{% trans "Return to Home" %}</a>
 {% endblock %}

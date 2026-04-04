@@ -1,32 +1,37 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{{ article.title }}{% endblock %}
+
 {% block content %}
-  <h1>{{ article.title }}</h1>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ article.title }}</h3>
+    </div>
+    <div class="panel-body">
+        <p><strong>{% trans "Author:" %}</strong> {{ article.author.username }}</p>
+        <p><strong>{% trans "Created:" %}</strong> {{ article.created }}</p>
+        <p><strong>{% trans "Synopsis:" %}</strong> {{ article.synopsis }}</p>
+        <p><strong>{% trans "Time since created:" %}</strong> {{ article.created|timesince }} {% trans "ago" %}</p>
+        <hr>
+        <h4>{% trans "Content" %}</h4>
+        <div>
+            {{ article.content|linebreaks }}
+        </div>
+    </div>
+</div>
 
-  <p><strong>{% trans "Author:" %}</strong> {{ article.author.username }}</p>
-  <p><strong>{% trans "Created:" %}</strong> {{ article.created }}</p>
-  <p><strong>{% trans "Synopsis:" %}</strong> {{ article.synopsis }}</p>
-  <p><strong>{% trans "Time since created:" %}</strong> {{ article.created|timesince }}</p>
+<p>
+    <a class="btn btn-default" href="{% url 'ex:publications' %}">{% trans "Back to Publications" %}</a>
+</p>
 
-  <hr>
-  <h3>{% trans "Content" %}</h3>
-  <div>
-    {{ article.content|linebreaks }}
-  </div>
-
-  <p>
-    <a href="{% url 'ex:publications' %}">{% trans "Back to Publications" %}</a>
-  </p>
-
-  {% if user.is_authenticated %}
-    <form method="post" action="{% url 'ex:add-favourite' article.pk %}">
-      {% csrf_token %}
-      {{ form }} {# opcional: si NO pasas form desde Detail, quítalo #}
-      <button type="submit">{% trans "Add to favourite" %}</button>
-    </form>
-  {% else %}
-    <p>{% trans "You must login to add favourites." %}</p>
-  {% endif %}
+{% if user.is_authenticated %}
+<form method="post" action="{% url 'ex:add-favourite' article.pk %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-info">{% trans "Add to favourite" %}</button>
+</form>
+{% else %}
+<div class="alert alert-warning" role="alert">{% trans "You must login to add favourites." %}</div>
+{% endif %}
 
 {% endblock %}

@@ -1,27 +1,75 @@
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% trans "My Site" %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .page-shell {
+            margin-top: 12px;
+            margin-bottom: 24px;
+        }
+
+        .top-language {
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .hero-title {
+            margin-top: 4px;
+            margin-bottom: 14px;
+        }
+
+        .article-table .btn {
+            min-width: 58px;
+        }
+
+        .table > thead > tr > th {
+            border-bottom-width: 2px;
+        }
+    </style>
 </head>
 <body>
-    {% block header %}
-    <header>
-        <h1>{% trans "Welcome to My Site" %}</h1>
-        {% include 'nav.html' %}
-    </header>
-    {% endblock %}
-    <main>
-        {% block content %}
-        
+    <div class="container-fluid page-shell">
+        {% block header %}
+        <header>
+            <div class="top-language">
+                <form action="{% url 'set_language' %}" method="post" class="form-inline">
+                    {% csrf_token %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% if LANGUAGE_CODE == 'en' %}
+                    <input type="hidden" name="language" value="es">
+                    <button class="btn btn-link" type="submit">Passer en fran&ccedil;ais</button>
+                    {% else %}
+                    <input type="hidden" name="language" value="en">
+                    <button class="btn btn-link" type="submit">Switch to English</button>
+                    {% endif %}
+                </form>
+            </div>
+            <h1 class="hero-title">Articles <small>Share your writings</small></h1>
+            <hr>
+            {% include 'nav.html' %}
+        </header>
         {% endblock %}
-    </main>
-    {% block footer %}
-    <footer>
-        <p>&copy; 2026 {% trans "My Site" %} — {% trans "Visit my MySpace page" %}</p>
-    </footer>
-    {% endblock %}
+
+        <main>
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>

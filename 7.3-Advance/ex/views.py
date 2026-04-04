@@ -13,7 +13,7 @@ from .models import Article, UserFavouriteArticle
 
 class Articles(ListView):
     model = Article
-    template_name = "ex/articles_list.html"
+    template_name = "ex/article_list.html"
     context_object_name = "articles"
 
     def get_queryset(self):

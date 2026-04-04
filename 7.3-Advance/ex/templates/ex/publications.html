@@ -4,27 +4,32 @@
 {% block title %}{% trans "Publications" %}{% endblock %}
 
 {% block content %}
-<!-- Articles shown as a table -->
-<table>
+<table class="table article-table">
     <thead>
         <tr>
             <th>{% trans "Title" %}</th>
             <th>{% trans "Synopsis" %}</th>
+            <th>{% trans "Writer" %}</th>
             <th>{% trans "Created" %}</th>
-            <th>{% trans "Time since created" %}</th>
-            <th>{% trans "Link" %}</th>
+            <th>{% trans "When" %}</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for article in articles %}
         <tr>
             <td>{{ article.title }}</td>
-            <td>{{ article.synopsis|truncatechars:21 }}</td>
+            <td>{{ article.synopsis|truncatechars:140 }}</td>
+            <td>{{ article.author.username|default:article.author }}</td>
             <td>{{ article.created }}</td>
-            <td>{{ article.created|timesince }}</td>
-            <td>
-                <a href="{% url 'ex:article-detail' article.pk %}">{% trans "Read" %}</a>
+            <td>{{ article.created|timesince }} {% trans "ago" %}</td>
+            <td class="text-right">
+                <a class="btn btn-info" href="{% url 'ex:article-detail' article.pk %}">{% trans "Read" %}</a>
             </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-muted">{% trans "You do not have publications yet." %}</td>
         </tr>
         {% endfor %}
     </tbody>
