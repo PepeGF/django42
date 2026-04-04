@@ -117,11 +117,21 @@ msgid "You have no favourite articles."
 msgstr "No tienes artículos favoritos."
 
 # Register / Publish
-msgid "Register"
-msgstr "Registrarse"
-
 msgid "Publish Article"
 msgstr "Publicar artículo"
 
-msgid "Publish"
-msgstr "Publicar"
+# New table labels and empty states
+msgid "Writer"
+msgstr "Escritor"
+
+msgid "When"
+msgstr "Hace"
+
+msgid "ago"
+msgstr "atras"
+
+msgid "No articles available."
+msgstr "No hay articulos disponibles."
+
+msgid "You do not have publications yet."
+msgstr "Todavia no tienes publicaciones."

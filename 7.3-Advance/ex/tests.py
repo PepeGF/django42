@@ -1,123 +1,86 @@
-from django.test import TestCase
-from django.urls import reverse
+
 from django.contrib.auth import get_user_model
+from django.test import Client, TestCase
+from django.urls import reverse
+
 from .models import Article, UserFavouriteArticle
+
 
 User = get_user_model()
 
 
-class AccessControlAndFavouritesTests(TestCase):
+class ProtectedViewsTest(TestCase):
+    """Ensure protected views redirect anonymous users to login."""
+
     def setUp(self):
-        self.user = User.objects.create_user(username="u", password="p")
-        self.other = User.objects.create_user(username="o", password="p")
-        self.article = Article.objects.create(
-            title="T", author=self.other, synopsis="synopsis", content="content"
-        )
+        self.client = Client()
 
-    def test_favourites_view_requires_authentication_and_uses_template(self):
-        url = reverse('ex:favourites')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 302)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, "ex/favourite.html")
+    def test_favourites_publications_publish_redirect_anonymous(self):
+        protected_routes = ['favourites', 'publications', 'publish']
 
-    def test_publications_view_requires_authentication_and_uses_template(self):
-        url = reverse('ex:publications')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 302)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, "ex/publications.html")
-
-    def test_publish_view_requires_authentication_and_uses_template(self):
-        url = reverse('ex:publish')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 302)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, "ex/publish.html")
-
-    def test_authenticated_user_cannot_access_registration_form(self):
-        url = reverse('ex:register')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertNotEqual(resp.status_code, 200)
-
-    def test_user_cannot_add_same_article_twice_to_favourites(self):
-        add_url = reverse('ex:add-favourite', kwargs={'pk': self.article.pk})
-        self.client.login(username="u", password="p")
-        resp1 = self.client.post(add_url, follow=True)
-        self.assertEqual(
-            UserFavouriteArticle.objects.filter(user=self.user, article=self.article).count(), 1
-        )
-        resp2 = self.client.post(add_url, follow=True)
-        self.assertEqual(
-            UserFavouriteArticle.objects.filter(user=self.user, article=self.article).count(), 1
-        )
-from django.test import TestCase
-from django.urls import reverse
-from django.contrib.auth import get_user_model
-from .models import Article, UserFavouriteArticle
-
-User = get_user_model()
+        for route_name in protected_routes:
+            with self.subTest(route=route_name):
+                response = self.client.get(reverse(f'ex:{route_name}'))
+                self.assertEqual(response.status_code, 302)
+                self.assertIn(reverse('ex:login'), response.url)
+                if route_name == 'publish':
+                    self.assertIn('next=', response.url)
 
 
-class FavouritesAndAccessTests(TestCase):
+class RegisterAccessTest(TestCase):
+    """Ensure authenticated users cannot access register form."""
+
     def setUp(self):
-        self.user = User.objects.create_user(username="u", password="p")
-        self.other = User.objects.create_user(username="o", password="p")
-        self.article = Article.objects.create(
-            title="T", author=self.other, synopsis="synopsis", content="content"
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='registered_user',
+            password='secure-pass-123',
         )
 
-    def test_favourites_view_requires_login_and_uses_template_for_authenticated(self):
-        url = reverse('ex:favourites')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 302)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, "ex/favourite.html")
+    def test_logged_in_user_is_redirected_from_register(self):
+        self.client.login(username='registered_user', password='secure-pass-123')
 
-    def test_publications_view_requires_login_and_uses_template_for_authenticated(self):
-        url = reverse('ex:publications')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 302)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, "ex/publications.html")
+        response = self.client.get(reverse('ex:register'))
 
-    def test_publish_view_requires_login_and_uses_template_for_authenticated(self):
-        url = reverse('ex:publish')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 302)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.assertTemplateUsed(resp, "ex/publish.html")
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('ex:home'))
 
-    def test_authenticated_user_cannot_access_registration_form(self):
-        url = reverse('ex:register')
-        resp = self.client.get(url)
-        self.assertEqual(resp.status_code, 200)
-        self.client.login(username="u", password="p")
-        resp = self.client.get(url)
-        self.assertNotEqual(resp.status_code, 200)
 
-    def test_user_cannot_add_same_article_twice_to_favourites(self):
-        add_url = reverse('ex:add-favourite', kwargs={'pk': self.article.pk})
-        self.client.login(username="u", password="p")
-        resp1 = self.client.post(add_url, follow=True)
-        self.assertEqual(UserFavouriteArticle.objects.filter(user=self.user, article=self.article).count(), 1)
-        resp2 = self.client.post(add_url, follow=True)
-        self.assertEqual(UserFavouriteArticle.objects.filter(user=self.user, article=self.article).count(), 1)
-from django.test import TestCase
+class FavouriteDuplicateTest(TestCase):
+    """Ensure the same article cannot be added twice to favourites."""
 
-# Create your tests here.
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='reader_user',
+            password='reader-pass-123',
+        )
+        self.author = User.objects.create_user(
+            username='author_user',
+            password='author-pass-123',
+        )
+        self.article = Article.objects.create(
+            title='Testing duplicates',
+            author=self.author,
+            synopsis='Short synopsis for duplicate favourite test.',
+            content='Long content for duplicate favourite test.',
+        )
+
+    def test_cannot_add_same_article_twice_via_view(self):
+        self.client.login(username='reader_user', password='reader-pass-123')
+
+        url = reverse('ex:add-favourite', kwargs={'pk': self.article.pk})
+        payload = {'article': self.article.pk}
+
+        first_response = self.client.post(url, payload)
+        second_response = self.client.post(url, payload)
+
+        self.assertEqual(first_response.status_code, 302)
+        self.assertEqual(second_response.status_code, 302)
+        self.assertEqual(
+            UserFavouriteArticle.objects.filter(
+                user=self.user,
+                article=self.article,
+            ).count(),
+            1,
+        )
